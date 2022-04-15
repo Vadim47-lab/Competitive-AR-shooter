@@ -1,3 +1,4 @@
+using UnityEngine.Events;
 using UnityEngine;
 
 [RequireComponent(typeof(Animator))]
@@ -9,6 +10,10 @@ public class Player : MonoBehaviour
 
     private float _lastShootTime;
     private Animator _animator;
+
+    public int Health => _health;
+
+    public event UnityAction<int> HealthChanged;
 
     private void Start()
     {
@@ -30,5 +35,6 @@ public class Player : MonoBehaviour
     public void TakeDamage(int damage)
     {
         _health -= damage;
+        HealthChanged?.Invoke(_health);
     }
 }
